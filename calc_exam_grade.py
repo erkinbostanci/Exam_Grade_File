@@ -1,6 +1,6 @@
 def exam_grade(line):
 
-
+    global grade
     line = line[:-1]
 
     listing = line.split(",")
@@ -16,7 +16,6 @@ def exam_grade(line):
     calc_grade = grade1 * (3/10) + grade2 * (3/10) + grade3 * (4/10)
 
     if (calc_grade >= 90):
-
         grade = "AA"
     elif (calc_grade >= 85):
         grade = "BA"
@@ -38,20 +37,19 @@ def exam_grade(line):
     return name + "------------------> " + grade + "\n"
 
 
-
-
-
-
-
 with open("name_list.txt","r",encoding= "utf-8") as file:
 
-    add_list = []
-
+    passed=[]
+    dn_passed=[]
     for i in file:
-
-        add_list.append(exam_grade(i))
-
-    with open("exam_result.txt","w",encoding="utf-8") as file2:
-
-        for i in add_list:
+        exam_grade(i)
+        if (grade == "FF" or grade=="FD"):
+            dn_passed.append(exam_grade(i))
+        else:
+            passed.append(exam_grade(i))
+    with open("passed.txt","w",encoding="utf-8") as file2:
+        for i in passed:
             file2.write(i)
+    with open("dn_passed.txt","w",encoding="utf-8") as file3:
+        for i in dn_passed:
+            file3.write(i)
